@@ -8,9 +8,33 @@ public class ScoreManager : MonoBehaviour
     public Text textScore;
     [Header("分數")]
     public int Score;
+    [Header("投進的分數")]
+    public int ScoreIn;
 
     private void OnTriggerEnter(Collider other)
     {
-        print(other.name);
+        if(other.tag == "籃球")
+        {
+            AddScore();
+        }
+
+        if (other.transform.root.name == "Player") 
+        {
+            ScoreIn = 3;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.transform.root.name == "Player") 
+        {
+            ScoreIn = 2;
+        }
+    }
+
+    private void AddScore()
+    {
+        Score += ScoreIn;
+        textScore.text = "分數"+Score;
     }
 }
